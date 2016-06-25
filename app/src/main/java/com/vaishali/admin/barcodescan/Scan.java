@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import android.content.Intent;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -37,7 +38,7 @@ import android.widget.Toast;
 public class Scan extends AppCompatActivity implements View.OnClickListener{
 
 
-    private Button scanBtn, linkBtn;
+    private Button scanBtn, linkBtn,add;
     private TextView authorText, titleText, descriptionText, dateText, ratingCountText;
     private LinearLayout starLayout;
     private ImageView thumbView;
@@ -45,12 +46,21 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
 
     private Bitmap thumbImg;
 
+    DatabaseAdapter d;
+
+    String bookname;
+    String authorname;
+    String genre=null;
+    String rating;
+    String read=null;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_scan);
         scanBtn = (Button) findViewById(R.id.scan_button);
-
+        add = (Button) findViewById(R.id.button3);
+        add.setVisibility(View.GONE);
 
         linkBtn = (Button) findViewById(R.id.link_btn);
         linkBtn.setVisibility(View.GONE);
@@ -63,13 +73,31 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
         ratingCountText = (TextView) findViewById(R.id.book_rating_count);
         thumbView = (ImageView) findViewById(R.id.thumb);
 
+        d= new DatabaseAdapter(this);
+
         starViews = new ImageView[5];
         for (int s = 0; s < starViews.length; s++) {
             starViews[s] = new ImageView(this);
         }
 
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar3);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.main_title3);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         scanBtn.setOnClickListener(this);
         linkBtn.setOnClickListener(this);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                d.insertData1(bookname,authorname,genre,rating,read);
+
+            }
+        });
 
     }
 
@@ -162,7 +190,8 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
                 JSONArray bookArray = resultObject.getJSONArray("items");
                 JSONObject bookObject = bookArray.getJSONObject(0);
                 JSONObject volumeObject = bookObject.getJSONObject("volumeInfo");
-                try{ titleText.setText("TITLE: "+volumeObject.getString("title")); }
+                try{ titleText.setText("TITLE: "+volumeObject.getString("title"));
+                     bookname=titleText.getText().toString();}
                 catch(JSONException jse){
                     titleText.setText("");
                     jse.printStackTrace();
@@ -175,6 +204,7 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
                         authorBuild.append(authorArray.getString(a));
                     }
                     authorText.setText("AUTHOR(S): "+authorBuild.toString());
+                    authorname=authorText.getText().toString();
                 }
                 catch(JSONException jse){
                     authorText.setText("");
@@ -206,7 +236,8 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
                     starLayout.removeAllViews();
                     jse.printStackTrace();
                 }
-                try{ ratingCountText.setText(" - "+volumeObject.getString("ratingsCount")+" ratings"); }
+                try{ ratingCountText.setText(" - "+volumeObject.getString("ratingsCount")+" ratings");
+                    rating=ratingCountText.getText().toString();}
                 catch(JSONException jse){
                     ratingCountText.setText("");
                     jse.printStackTrace();
@@ -215,6 +246,8 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
                 try{
                     linkBtn.setTag(volumeObject.getString("infoLink"));
                     linkBtn.setVisibility(View.VISIBLE);
+                    add.setVisibility(View.VISIBLE);
+
                 }
                 catch(JSONException jse){
                     linkBtn.setVisibility(View.GONE);
@@ -228,6 +261,8 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
                     thumbView.setImageBitmap(null);
                     jse.printStackTrace();
                 }
+
+
 
 
 

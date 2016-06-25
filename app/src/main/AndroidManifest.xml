@@ -17,9 +17,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Scan" />
-        <activity android:name=".Add" />
-        <activity android:name=".View1" />
+        <activity android:name=".Scan">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+        <activity android:name=".Add">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+        <activity android:name=".View1">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.default_searchable"
+                android:value=".View1"/>
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+            <meta-data android:name="android.app.Searchable"
+                android:resource="@xml/search"/>
+
+        </activity>
+
+
+
+
+
+
     </application>
 
 </manifest>

@@ -1,47 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.vaishali.admin.barcodescan.MainActivity"
+    android:fitsSystemWindows="true"
+    tools:context="com.vaishali.admin.barcodescan.MainActivity">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
     android:background="@drawable/book">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/view">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/tool_bar" />
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ADD"
-        android:background="#2F4F4F"
+        android:background="#3F51B5"
         android:id="@+id/button"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="157dp" />
+        android:layout_marginRight="46dp"
+        android:layout_marginEnd="46dp"
+        android:layout_above="@+id/view2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="VIEW"
-        android:background="#2F4F4F"
+        android:background="#3F51B5"
         android:id="@+id/button4"
-        android:layout_below="@+id/button"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="48dp"
+        android:layout_below="@+id/view"
+        android:layout_toRightOf="@+id/view2"
+        android:layout_toEndOf="@+id/view2"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SCAN"
-        android:background="#2F4F4F"
+        android:background="#3F51B5"
         android:id="@+id/button5"
+        android:layout_marginTop="50dp"
+        android:onClick="scanfunc"
         android:layout_below="@+id/button4"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_marginTop="40dp"
-        android:onClick="Scanfunc"/>
+        android:layout_alignLeft="@+id/button4"
+        android:layout_alignStart="@+id/button4" />
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

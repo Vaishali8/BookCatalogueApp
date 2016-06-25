@@ -46,6 +46,19 @@ public class DatabaseAdapter {
         long id = object.insert(DbHelper.TABLE_NAME,null,contentValues);
         return id;
     }
+    public long insertData1(String bname, String aname, String genr, String rate1, String read1) {
+        SQLiteDatabase object = helper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NAME,bname);
+        contentValues.put(ANAME,aname);
+        contentValues.put(GENRE,genr);
+        contentValues.put(RATING,rate1);
+        contentValues.put(READ,read1);
+
+        long id = object.insert(DbHelper.TABLE_NAME,null,contentValues);
+        return id;
+    }
 
     public Cursor getAllData()
     {
@@ -72,6 +85,35 @@ public class DatabaseAdapter {
             buffer.append(" "+bname+" "+aname+" "+genre+" "+rating+" "+read+"\n");
         }
         return cursor;
+    }
+    public Cursor fetchInfoBookName(String inputtext) throws SQLException{
+        SQLiteDatabase db=helper.getReadableDatabase();
+        Cursor mcursor=null;
+        if(inputtext==null || inputtext.length()==0)
+        {
+            mcursor=db.query(true,DbHelper.TABLE_NAME,null,null,null,null,null,null,null);
+        }
+        else
+        {
+            mcursor=db.query(true,DbHelper.TABLE_NAME,null,NAME + " like '%" + inputtext + "%' ",null,null,null,null,null);
+
+        }
+        StringBuffer buffer=new StringBuffer();
+        while(mcursor.moveToNext())
+        {
+            Integer bname1=mcursor.getColumnIndex(NAME);
+            Integer bname2=mcursor.getColumnIndex(ANAME);
+            Integer bname3=mcursor.getColumnIndex(GENRE);
+            Integer bname4=mcursor.getColumnIndex(RATING);
+            Integer bname5=mcursor.getColumnIndex(READ);
+            String bname=mcursor.getColumnName(bname1);
+            String aname=mcursor.getString(bname2);
+            String genre=mcursor.getString(bname3);
+            Integer rating=mcursor.getInt(bname4);
+            Integer read=mcursor.getInt(bname5);
+            buffer.append(" "+bname+" "+aname+" "+genre+" "+rating+" "+read+"\n");
+        }
+        return mcursor;
     }
     public String getAllData1()
     {

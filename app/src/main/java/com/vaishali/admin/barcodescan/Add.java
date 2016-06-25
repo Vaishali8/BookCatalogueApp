@@ -3,6 +3,7 @@ package com.vaishali.admin.barcodescan;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -42,6 +43,13 @@ public class Add extends AppCompatActivity implements AdapterView.OnItemSelected
         rate=(RatingBar)findViewById(R.id.ratingBar);
         read=(CheckBox)findViewById(R.id.checkBox2);
         d=new DatabaseAdapter(this);
+
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.main_title2);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ArrayList<String> gen=new ArrayList<>();
         gen.add("None");
@@ -100,7 +108,7 @@ public class Add extends AppCompatActivity implements AdapterView.OnItemSelected
 
                     }
 
-                    Toast.makeText(getApplicationContext(),d.getAllData1(),Toast.LENGTH_LONG).show();
+
                 }
 
             }

@@ -4,5 +4,24 @@
     <string name="thumb">Book thumbnail</string>
     <string name="pre">Preview</string>
     <string name="link">Web</string>
+    <string name="action_search">s</string>
+    <string name="action_refresh">r</string>
+    <string name="action_help">h</string>
+    <string name="title_activity_navigation">Navigation</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Help</string>
+    <string name="main_title">Home</string>
+    <string name="action_settings1">About this app</string>
+    <string name="main_title1">My Books</string>
+    <string name="searchable">search</string>
+    <string name="searchauthor">Title</string>
+    <string name="searchbook">Book name</string>
+    <string name="action_addfromview">Add</string>
+    <string name="action_scanfromview">Scan</string>
+    <string name="main_title2">Add Book</string>
+    <string name="main_title3">Scan A Book</string>
 
 </resources>
