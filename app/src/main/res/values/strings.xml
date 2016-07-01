@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BarcodeScan</string>
+    <string name="app_name">MyBookApp</string>
     <string name="scan">Scan</string>
     <string name="thumb">Book thumbnail</string>
     <string name="pre">Preview</string>

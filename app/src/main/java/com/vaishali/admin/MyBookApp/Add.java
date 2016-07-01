@@ -1,6 +1,5 @@
-package com.vaishali.admin.barcodescan;
+package com.vaishali.admin.MyBookApp;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class Add extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class Add extends AppCompatActivity{
 
     Button add;
     EditText bname,aname;
@@ -98,7 +97,7 @@ public class Add extends AppCompatActivity implements AdapterView.OnItemSelected
                 if(v.getId()==R.id.button2)
                 {
                     long id = d.insertData(bookname,author,genre1,Rate,checked);
-
+                    long id1 = d.insertData2(bookname,author,genre1,Rate,checked);
 
                     if (id < 0) {
                         Toast.makeText(getApplicationContext(),"Unsuccessful",Toast.LENGTH_LONG).show();
@@ -109,7 +108,20 @@ public class Add extends AppCompatActivity implements AdapterView.OnItemSelected
                     }
 
 
+
                 }
+
+            }
+        });
+        genre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selecteditem=parent.getItemAtPosition(position).toString();
+                genre1=selecteditem;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -119,15 +131,5 @@ public class Add extends AppCompatActivity implements AdapterView.OnItemSelected
 
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String selecteditem=parent.getItemAtPosition(position).toString();
-        genre1=selecteditem;
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }

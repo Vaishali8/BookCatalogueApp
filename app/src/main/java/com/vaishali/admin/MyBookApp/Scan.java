@@ -1,4 +1,4 @@
-package com.vaishali.admin.barcodescan;
+package com.vaishali.admin.MyBookApp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -80,7 +80,7 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
             starViews[s] = new ImageView(this);
         }
 
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar3);
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar4);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.main_title3);
 
@@ -95,6 +95,7 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
 
 
                 d.insertData1(bookname,authorname,genre,rating,read);
+                Toast.makeText(getApplicationContext(),"Successful",Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -191,7 +192,8 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
                 JSONObject bookObject = bookArray.getJSONObject(0);
                 JSONObject volumeObject = bookObject.getJSONObject("volumeInfo");
                 try{ titleText.setText("TITLE: "+volumeObject.getString("title"));
-                     bookname=titleText.getText().toString();}
+
+                     bookname=volumeObject.getString("title");}
                 catch(JSONException jse){
                     titleText.setText("");
                     jse.printStackTrace();
@@ -204,7 +206,7 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
                         authorBuild.append(authorArray.getString(a));
                     }
                     authorText.setText("AUTHOR(S): "+authorBuild.toString());
-                    authorname=authorText.getText().toString();
+                    authorname=authorBuild.toString();
                 }
                 catch(JSONException jse){
                     authorText.setText("");
@@ -223,6 +225,7 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
                 try{
 
                     double decNumStars = Double.parseDouble(volumeObject.getString("averageRating"));
+                    rating=volumeObject.getString("averageRating");
                     int numStars = (int)decNumStars;
                     starLayout.setTag(numStars);
                     starLayout.removeAllViews();
@@ -237,7 +240,7 @@ public class Scan extends AppCompatActivity implements View.OnClickListener{
                     jse.printStackTrace();
                 }
                 try{ ratingCountText.setText(" - "+volumeObject.getString("ratingsCount")+" ratings");
-                    rating=ratingCountText.getText().toString();}
+                    }
                 catch(JSONException jse){
                     ratingCountText.setText("");
                     jse.printStackTrace();

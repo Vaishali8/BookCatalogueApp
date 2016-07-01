@@ -1,11 +1,7 @@
-package com.vaishali.admin.barcodescan;
+package com.vaishali.admin.MyBookApp;
 
-import android.app.ListActivity;
-import android.app.LoaderManager;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,38 +11,47 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.ListView;
 
-public class View1 extends AppCompatActivity {
+public class View1 extends AppCompatActivity implements SearchView.OnQueryTextListener,SearchView.OnCloseListener {
 
     TextView t;
     DatabaseAdapter d;
-    EditText search;
+
+    SearchView searchview;
 
     private SimpleCursorAdapter _adapter;
-    ListView listView;
+    ListView listView,l;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
         t = (TextView) findViewById(R.id.textView7);
-        search= (EditText) findViewById(R.id.editText3);
+
         d = new DatabaseAdapter(this);
         listView=(ListView)findViewById(R.id.listView);
 
+
+
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar1);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.main_title1);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Intent searchIntent=getIntent();
+        String query1;
+        if(Intent.ACTION_SEARCH.equals(searchIntent.getAction()))
+        {
+            query1=searchIntent.getStringExtra(SearchManager.QUERY);
+
+        }
 
         Cursor cursor = d.getAllData();
 
@@ -68,36 +73,8 @@ public class View1 extends AppCompatActivity {
 
 
         String query;
-        Intent searchIntent=getIntent();
-        if(Intent.ACTION_SEARCH.equals(searchIntent.getAction()))
-        {
-             query=searchIntent.getStringExtra(SearchManager.QUERY);
 
 
-        }
-        search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-             _adapter.getFilter().filter(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        _adapter.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence constraint) {
-
-                return d.fetchInfoBookName(constraint.toString());
-            }
-        });
 
 
     }
@@ -107,9 +84,11 @@ public class View1 extends AppCompatActivity {
     {
         getMenuInflater().inflate(R.menu.view_menu,menu);
 
-        SearchView searchview= (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchview= (SearchView) menu.findItem(R.id.menu_search).getActionView();
         SearchManager searchManager= (SearchManager) getSystemService(SEARCH_SERVICE);
         searchview.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchview.setOnQueryTextListener(this);
+        searchview.setOnCloseListener(this);
 
         return super.onCreateOptionsMenu(menu);
 
@@ -132,4 +111,47 @@ public class View1 extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onClose() {
+        ShowResults("");
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        ShowResults(query + "*");
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        ShowResults(newText + "*");
+        return false;
+    }
+    public void ShowResults(String query)
+    {
+         l=(ListView)findViewById(R.id.listView);
+        Cursor cursor = d.search((query != null ? query.toString():"@@@@"));
+        if(cursor==null)
+        {
+
+        }
+        else
+        {
+            String[] columns = new String[]{
+                    d.NAME,
+                    d.ANAME,
+                    d.GENRE,
+                    d.RATING
+            };
+            int[] to = new int[]{
+                    R.id.book,
+                    R.id.aname,
+                    R.id.genre,
+                    R.id.rating,
+            };
+            SimpleCursorAdapter book=new SimpleCursorAdapter(this,R.layout.listview,cursor,columns,to,0);
+            l.setAdapter(book);
+        }
+    }
 }

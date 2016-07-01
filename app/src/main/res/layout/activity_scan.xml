@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    tools:context="com.vaishali.admin.barcodescan.Scan">
+    tools:context="com.vaishali.admin.MyBookApp.Scan">
     <include layout="@layout/tool_bar" />
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         android:id="@+id/view3">
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar3"
+            android:id="@+id/toolbar4"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -83,7 +83,7 @@
                     android:textIsSelectable="true"
                     android:textStyle="italic" />
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
 
@@ -93,7 +93,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/link"
-                        android:background="@color/colorPrimary"/>
+                        android:background="@color/colorPrimary"
+                        android:layout_marginRight="10dp"/>
                     <Button
                         style="?android:attr/buttonStyleSmall"
                         android:layout_width="wrap_content"
@@ -101,9 +102,7 @@
                         android:text="ADD TO YOUR LIST"
                         android:id="@+id/button3"
                         android:background="@color/colorPrimary"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
+
                         android:layout_marginBottom="124dp" />
                 </LinearLayout>
                 <LinearLayout

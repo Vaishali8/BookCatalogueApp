@@ -1,4 +1,4 @@
-package com.vaishali.admin.barcodescan;
+package com.vaishali.admin.MyBookApp;
 
 import org.junit.Test;
 
